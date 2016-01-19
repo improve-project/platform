@@ -1,0 +1,12 @@
+var searchData=
+[
+  ['accesstoken',['accessToken',['../classmodels_1_1_user_class_1_1_user_class.html#a2e3ad7d00c938e86dc3e9a4801f1ddcc',1,'models.UserClass.UserClass.accessToken()'],['../classmodels_1_1_user_class_1_1_user_class.html#adf39f2ed58d00e28dcf3295ccedc8b82',1,'models.UserClass.UserClass.accessToken()']]],
+  ['allowedorganizations',['allowedOrganizations',['../classmodels_1_1_patient_class_1_1_patient_class.html#acb4f52d6abdded5013412a27a6642fd3',1,'models.PatientClass.PatientClass.allowedOrganizations()'],['../classmodels_1_1_patient_class_1_1_patient_class.html#a6003d686155594978a4f20bf5176bb29',1,'models.PatientClass.PatientClass.allowedOrganizations()']]],
+  ['analysisengine',['analysisEngine',['../classdatabase__handler_1_1_database_handler.html#a9ddfc0c4004c48504fb769b1acdf70d3',1,'database_handler::DatabaseHandler']]],
+  ['analysismodule',['analysisModule',['../classmodels_1_1_analysis_class_1_1_analysis_class.html#abab0931cba754d8f2cfcd29514c57af8',1,'models.AnalysisClass.AnalysisClass.analysisModule()'],['../classmodels_1_1_analysis_class_1_1_analysis_class.html#a7475ad4cdef57e74e15850f5f02aeffd',1,'models.AnalysisClass.AnalysisClass.analysisModule()']]],
+  ['analysisresult',['analysisResult',['../classmodels_1_1_analysis_class_1_1_analysis_class.html#ad51aaaf7e4443164ebf9230ec86f9dd6',1,'models.AnalysisClass.AnalysisClass.analysisResult()'],['../classmodels_1_1_analysis_class_1_1_analysis_class.html#a831a3801eca70df105ef857512066054',1,'models.AnalysisClass.AnalysisClass.analysisResult()']]],
+  ['analysissession',['analysisSession',['../classdatabase__handler_1_1_database_handler.html#a03e335f4ad8ee674391a82c4848ff20c',1,'database_handler::DatabaseHandler']]],
+  ['analysistaskid',['analysistaskID',['../classmodels_1_1_analysis_class_1_1_analysis_class.html#a488c8718a7959febf63561960f98ffaf',1,'models.AnalysisClass.AnalysisClass.analysistaskID()'],['../classmodels_1_1_analysis_class_1_1_analysis_class.html#a551619b99f32a0fb89e6362940cdfc8d',1,'models.AnalysisClass.AnalysisClass.analysistaskID()']]],
+  ['app',['app',['../namespaceapp.html#ad3afa162eb284cf3d0ed835917982bc9',1,'app']]],
+  ['axiscount',['axisCount',['../classmodels_1_1_device_class_1_1_device_class.html#ab8892133be87075404a715741864cdf2',1,'models.DeviceClass.DeviceClass.axisCount()'],['../classmodels_1_1_device_class_1_1_device_class.html#a360a221a935304a80ce8043188d3eada',1,'models.DeviceClass.DeviceClass.axisCount()']]]
+];

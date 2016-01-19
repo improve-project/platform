@@ -1,0 +1,21 @@
+digraph "models.PatientClass.PatientClass.columnitems"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="models.PatientClass.Patient\lClass.columnitems",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="models.AnalysisClass.Analysis\lClass.columns",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_analysis_class_1_1_analysis_class.html#a86d727b7a33ad8a4940a16bef899276f"];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="models.DataClass.DataClass.columns",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_data_class_1_1_data_class.html#a09a87c0528b2ddc4fe835c0500f40e2b"];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="models.DeviceClass.Device\lClass.columns",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_device_class_1_1_device_class.html#a215015f98ddf18faa78cd57eb6b45cfc"];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="models.ExerciseClass.Exercise\lClass.columns",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_exercise_class_1_1_exercise_class.html#ae058259ad06b8df68c90df69ce96c133"];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="models.ExerciseResultClass.\lExerciseResultClass.columns",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_exercise_result_class_1_1_exercise_result_class.html#ab2335327734c18d16cd53fc6b02e9236"];
+  Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="models.OrganizationClass.\lOrganizationClass.columns",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_organization_class_1_1_organization_class.html#ad71e6733810a95237d20c435194e3fb1"];
+  Node1 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="models.PatientClass.Patient\lClass.columns",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_patient_class_1_1_patient_class.html#ad4ae63972057ede958f2b4ba3f0239ee"];
+}

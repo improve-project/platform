@@ -1,0 +1,3345 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Improve-platform
+  description: 'The Improve-platform is a web-service to which users and sensors connect via REST-endpoints. These endpoint can be seen as three different APIs: the Data API, Analysis API and Auth API.'
+  contact:
+    email: improveproj@gmail.com
+host: "localhost:8080"
+basePath: "/api/v1.0"
+externalDocs:
+  description: More about Improve-platform in GitHub
+  url: https://github.com/improve-project/platform
+schemes:
+  - http
+  - https
+securityDefinitions:
+  apiAuth:
+    type: apiKey
+    description: API Key based authentication method to provide very simple user authentication. Currently user's username is used as apiKey. OAuth as authentication method has not been implemented due more complex client-side requirements.
+    name: username
+    in: header
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /data/organizations:
+    get:
+      tags:
+        - Organizations
+      description: Returns list of organizations
+      security:
+        - apiAuth: []
+      responses:
+        '200':
+          description: List of organizations
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Organizations:
+                      $ref: '#/definitions/Response_Organizations'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - Organizations
+      description: Creates an organization
+      security:
+        - apiAuth: []
+      parameters:
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewOrganization'
+      responses:
+        '201':
+          description: Information about specified organization
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    organizationID:
+                      type: string
+                      description: ID of organization
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/organizations/{organizationID}':
+    get:
+      tags:
+        - Organizations
+      description: Returns organization by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: organizationID
+          in: path
+          description: ID of the organization
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified organization
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Organizations:
+                      $ref: '#/definitions/Response_Organizations'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - Organizations
+      description: Updates an organization
+      security:
+        - apiAuth: []
+      parameters:
+        - name: organizationID
+          in: path
+          description: ID of the organization
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          schema:
+            $ref: '#/definitions/UpdateEntry'
+      responses:
+        '200':
+          description: Information about specified organization
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - Organizations
+      description: Deletes an organization
+      security:
+        - apiAuth: []
+      parameters:
+        - name: organizationID
+          in: path
+          description: ID of the organization
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified organization
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    organizationID:
+                      type: string
+                      description: ID of organization
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/organizations/{organizationID}/users':
+    post:
+      tags:
+        - Organizations
+      description: Adds users to organization
+      security:
+        - apiAuth: []
+      parameters:
+        - name: organizationID
+          in: path
+          description: ID of the organization
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewUserToOrganization'
+      responses:
+        '200':
+          description: Information about specified organization
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    organizationID:
+                      type: string
+                      description: ID of organization
+                    UserIDs:
+                      type: string
+                      description: Users of the organization
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/organizations/{organizationID}/users/{userID}':
+    delete:
+      tags:
+        - Organizations
+      description: Removes the user from the organization
+      security:
+        - apiAuth: []
+      parameters:
+        - name: organizationID
+          in: path
+          description: ID of the organization
+          required: true
+          type: string
+        - name: userID
+          in: path
+          description: ID of the user
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified organization
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    organizationID:
+                      type: string
+                      description: ID of organization
+                    userID:
+                      type: string
+                      description: List of userIDs
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  /data/groups:
+    get:
+      tags:
+        - UserGroups
+      description: Returns list of UserGroups
+      security:
+        - apiAuth: []
+      responses:
+        '200':
+          description: List of UserGroups
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    UserGroups:
+                      $ref: '#/definitions/Response_UserGroups'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - UserGroups
+      description: Creates an UserGroup
+      security:
+        - apiAuth: []
+      parameters:
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewUserGroup'
+      responses:
+        '201':
+          description: Information about specified UserGroup
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userGroupID:
+                      type: string
+                      description: ID of UserGroup
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/groups/{userGroupID}':
+    get:
+      tags:
+        - UserGroups
+      description: Returns UserGroup by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: userGroupID
+          in: path
+          description: ID of the UserGroup
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified UserGroup
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    UserGroups:
+                      $ref: '#/definitions/Response_UserGroups'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - UserGroups
+      description: Updates an UserGroup
+      security:
+        - apiAuth: []
+      parameters:
+        - name: userGroupID
+          in: path
+          description: ID of the UserGroup
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          schema:
+            $ref: '#/definitions/UpdateEntry'
+      responses:
+        '200':
+          description: Information about specified UserGroup
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - UserGroups
+      description: Deletes an UserGroup
+      security:
+        - apiAuth: []
+      parameters:
+        - name: userGroupID
+          in: path
+          description: ID of the UserGroup
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified UserGroup
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userGroupID:
+                      type: string
+                      description: ID of UserGroup
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/groups/{userGroupID}/users':
+    post:
+      tags:
+        - UserGroups
+      description: Adds users to UserGroup
+      security:
+        - apiAuth: []
+      parameters:
+        - name: userGroupID
+          in: path
+          description: ID of UserGroup
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewUserToUserGroup'
+      responses:
+        '200':
+          description: Information about specified UserGroup
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userGroupID:
+                      type: string
+                      description: ID of UserGroup
+                    UserIDs:
+                      type: string
+                      description: Users of the UserGroup
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/groups/{userGroupID}/users/{userID}':
+    delete:
+      tags:
+        - UserGroups
+      description: Removes the user from the UserGroup
+      security:
+        - apiAuth: []
+      parameters:
+        - name: userGroupID
+          in: path
+          description: ID of the UserGroup
+          required: true
+          type: string
+        - name: userID
+          in: path
+          description: ID of the user
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified UserGroup
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userGroupID:
+                      type: string
+                      description: ID of UserGroup
+                    userID:
+                      type: string
+                      description: List of userIDs
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  /data/users:
+    get:
+      tags:
+        - Users
+      description: Returns list of Users
+      security:
+        - apiAuth: []
+      responses:
+        '200':
+          description: List of Users
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Users:
+                      $ref: '#/definitions/Response_Users'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - Users
+      description: Creates an User
+      security:
+        - apiAuth: []
+      parameters:
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewUser'
+      responses:
+        '201':
+          description: Information about specified User
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userID:
+                      type: string
+                      description: ID of User
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/users/{userID}':
+    get:
+      tags:
+        - Users
+      description: Returns User by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: userID
+          in: path
+          description: ID of the User
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified User
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Users:
+                      $ref: '#/definitions/Response_Users'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - Users
+      description: Updates an User
+      security:
+        - apiAuth: []
+      parameters:
+        - name: userID
+          in: path
+          description: ID of the User
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          schema:
+            $ref: '#/definitions/UpdateEntry'
+      responses:
+        '200':
+          description: Information about specified User
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - Users
+      description: Deletes an User
+      security:
+        - apiAuth: []
+      parameters:
+        - name: userID
+          in: path
+          description: ID of the User
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified User
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userID:
+                      type: string
+                      description: ID of User
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/users/{userID}/patients':
+    post:
+      tags:
+        - Users
+      description: Adds patient to user
+      security:
+        - apiAuth: []
+      parameters:
+        - name: userID
+          in: path
+          description: ID of User
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewPatientToUser'
+      responses:
+        '200':
+          description: Information about specified User
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userID:
+                      type: string
+                      description: ID of User
+                    PatientIDs:
+                      type: string
+                      description: Patients of the User
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/users/{userID}/patients/{patientID}':
+    delete:
+      tags:
+        - Users
+      description: Removes the patient from the User
+      security:
+        - apiAuth: []
+      parameters:
+        - name: userID
+          in: path
+          description: ID of the User
+          required: true
+          type: string
+        - name: patientID
+          in: path
+          description: ID of the patient
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified User
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    patientID:
+                      type: string
+                      description: ID of Patient
+                    userID:
+                      type: string
+                      description: List of userIDs
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  /data/patients:
+    get:
+      tags:
+        - Patients
+      description: Returns list of Patients
+      security:
+        - apiAuth: []
+      responses:
+        '200':
+          description: List of Patients
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Patients:
+                      $ref: '#/definitions/Response_Patients'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - Patients
+      description: Creates an Patient
+      security:
+        - apiAuth: []
+      parameters:
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewPatient'
+      responses:
+        '201':
+          description: Information about specified Patient
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    PatientID:
+                      type: string
+                      description: ID of PatientID
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/patients/{patientID}':
+    get:
+      tags:
+        - Patients
+      description: Returns patient by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: patientID
+          in: path
+          description: ID of the Patient
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified Patient
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Patients:
+                      $ref: '#/definitions/Response_Patients'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - Patients
+      description: Updates an Patient
+      security:
+        - apiAuth: []
+      parameters:
+        - name: patientID
+          in: path
+          description: ID of the Patient
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          schema:
+            $ref: '#/definitions/UpdateEntry'
+      responses:
+        '200':
+          description: Information about specified Patient
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - Patients
+      description: Deletes an Patient
+      security:
+        - apiAuth: []
+      parameters:
+        - name: patientID
+          in: path
+          description: ID of the Patient
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified Patient
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    patientID:
+                      type: string
+                      description: ID of Patient
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/patients/{patientID}/organizations':
+    post:
+      tags:
+        - Patients
+        - Organizations
+      description: Adds organization to patient
+      security:
+        - apiAuth: []
+      parameters:
+        - name: patientID
+          in: path
+          description: ID of Patient
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewOrganizationToPatient'
+      responses:
+        '200':
+          description: Information about specified Patient
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    patientID:
+                      type: string
+                      description: ID of Patient
+                    organizationID:
+                      type: string
+                      description: List of organizationIDs
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/patients/{patientID}/organizations/{organizationID}':
+    delete:
+      tags:
+        - Patients
+        - Organizations
+      description: Removes the Organization from the Patient
+      security:
+        - apiAuth: []
+      parameters:
+        - name: patientID
+          in: path
+          description: ID of the Patient
+          required: true
+          type: string
+        - name: organizationID
+          in: path
+          description: ID of the Organization
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified Patient
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    patientID:
+                      type: string
+                      description: ID of Patient
+                    organizationID:
+                      type: string
+                      description: List of organizationIDs
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/patients/{patientID}/rehabilitationSets':
+    post:
+      tags:
+        - Patients
+        - RehabilitationSets
+      description: Adds rehabilitation sets to the patient
+      security:
+        - apiAuth: []
+      parameters:
+        - name: patientID
+          in: path
+          description: ID of Patient
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewRehabilitationSetToPatient'
+      responses:
+        '200':
+          description: Information about specified Patient
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    patientID:
+                      type: string
+                      description: ID of Patient
+                    rehabilitationSetID:
+                      type: string
+                      description: List of rehabilitationSetIDs
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/patients/{patientID}/rehabilitationSets/{rehabilitationSetID}':
+    delete:
+      tags:
+        - Patients
+        - RehabilitationSets
+      description: Removes the rehabilitationSet from the Patient
+      security:
+        - apiAuth: []
+      parameters:
+        - name: patientID
+          in: path
+          description: ID of the Patient
+          required: true
+          type: string
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified Patient
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    patientID:
+                      type: string
+                      description: ID of Patient
+                    rehabilitationSetID:
+                      type: string
+                      description: List of rehabilitationSetIDs
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  /data/rehabilitationSets:
+    get:
+      tags:
+        - RehabilitationSets
+      description: Returns list of rehabilitationSets
+      security:
+        - apiAuth: []
+      responses:
+        '200':
+          description: List of rehabilitationSets
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    RehabilitationSets:
+                      $ref: '#/definitions/Response_RehabilitationSets'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - RehabilitationSets
+      description: Creates a rehabilitationSet and adds created rehabilitationSet to patient
+      security:
+        - apiAuth: []
+      parameters:
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewRehabilitationSet'
+      responses:
+        '201':
+          description: Information about specified RehabilitationSet
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    rehabilitationSetID:
+                      type: string
+                      description: ID of rehabilitationSet
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  /data/rehabilitationSets/patientConditions:
+    post:
+      tags:
+        - RehabilitationSets
+        - PatientConditions
+      description: Creates a PatientCondition
+      security:
+        - apiAuth: []
+      parameters:
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewPatientCondition'
+      responses:
+        '201':
+          description: Information about created PatientCondition
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    patientConditionID:
+                      type: string
+                      description: ID of PatientCondition
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  /data/rehabilitationSets/patientInformation:
+    post:
+      tags:
+        - RehabilitationSets
+        - PatientInformation
+      description: Creates a patientInformation
+      security:
+        - apiAuth: []
+      parameters:
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewPatientInformation'
+      responses:
+        '201':
+          description: Information about created patientInformation
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    patientInformationID:
+                      type: string
+                      description: ID of patientInformation
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/rehabilitationSets/{rehabilitationSetID}':
+    get:
+      tags:
+        - RehabilitationSets
+      description: Returns the rehabilitationSet by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified rehabilitationSet
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Patients:
+                      $ref: '#/definitions/Response_RehabilitationSets'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - RehabilitationSets
+      description: Updates a RehabilitationSet identified by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          schema:
+            $ref: '#/definitions/UpdateEntry'
+      responses:
+        '200':
+          description: Information about specified RehabilitationSet
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - RehabilitationSets
+      description: Deletes an RehabilitationSet identified by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified RehabilitationSet
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    rehabilitationSetID:
+                      type: string
+                      description: ID of rehabilitationSet
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/rehabilitationSets/{rehabilitationSetID}/patientConditions/{patientConditionID}':
+    get:
+      tags:
+        - RehabilitationSets
+        - PatientConditions
+      description: Returns the PatientCondition by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: patientConditionID
+          in: path
+          description: ID of the PatientCondition
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified patientCondition
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    PatientCondition:
+                      $ref: '#/definitions/Response_patientConditions'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - RehabilitationSets
+        - PatientConditions
+      description: Updates a patientCondition identified by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: patientConditionID
+          in: path
+          description: ID of the PatientCondition
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          schema:
+            $ref: '#/definitions/UpdateEntry'
+      responses:
+        '200':
+          description: Information about specified PatientCondition
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - RehabilitationSets
+        - PatientConditions
+      description: Deletes an PatientCondition identified by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: patientConditionID
+          in: path
+          description: ID of the PatientCondition
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified PatientCondition
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    patientConditionID:
+                      type: string
+                      description: ID of PatientCondition
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/rehabilitationSets/{rehabilitationSetID}/patientInformation/{patientInformationID}':
+    get:
+      tags:
+        - RehabilitationSets
+        - PatientInformation
+      description: Returns the patientInformation by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: patientInformationID
+          in: path
+          description: ID of the patientInformation
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified patientInformation
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    PatientInformation:
+                      $ref: '#/definitions/Response_patientInformation'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - RehabilitationSets
+        - PatientInformation
+      description: Updates a patientInformation identified by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: patientInformationID
+          in: path
+          description: ID of the patientInformation
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          schema:
+            $ref: '#/definitions/UpdateEntry'
+      responses:
+        '200':
+          description: Information about specified patientInformation
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - RehabilitationSets
+        - PatientInformation
+      description: Deletes an patientInformation identified by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: patientInformationID
+          in: path
+          description: ID of the patientInformation
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified patientInformation
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    patientInformationID:
+                      type: string
+                      description: ID of patientInformation
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/rehabilitationSets/{rehabilitationSetID}/exerciseResults':
+    post:
+      tags:
+        - Patients
+        - ExerciseResults
+      description: Creates an exerciseResult and appends it to rehabilitationSet
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of rehabilitationSet
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewExerciseResultToRehabilitationSet'
+      responses:
+        '200':
+          description: Information about specified exerciseResults
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    - type: object
+                      properties:
+                        dataID:
+                          type: string
+                          description: Data ID
+                        msg:
+                          type: string
+                          description: Status message of database query
+                        status_code:
+                          type: integer
+                          description: HTTP status code of database query
+                          minimum: 100
+                          maximum: 600
+                    - type: object
+                      properties:
+                        exerciseResultID:
+                          type: string
+                          description: Exercise Result ID
+                        msg:
+                          type: string
+                          description: Status message of database query
+                        status_code:
+                          type: integer
+                          description: HTTP status code of database query
+                          minimum: 100
+                          maximum: 600
+                    - type: object
+                      properties:
+                        rehabilitationSetID:
+                          type: string
+                          description: Rehabilitation Set ID
+                        msg:
+                          type: string
+                          description: Status message of database query
+                        status_code:
+                          type: integer
+                          description: HTTP status code of database query
+                          minimum: 100
+                          maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/rehabilitationSets/{rehabilitationSetID}/exerciseResults/{exerciseResultID}':
+    get:
+      tags:
+        - RehabilitationSets
+        - ExerciseResults
+      description: Returns the exerciseResult by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: exerciseResultID
+          in: path
+          description: ID of the exerciseResult
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified exerciseResult
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    exerciseResult:
+                      $ref: '#/definitions/Response_exerciseResult'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - RehabilitationSets
+        - ExerciseResults
+      description: Updates a exerciseResult identified by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: exerciseResultID
+          in: path
+          description: ID of the exerciseResult
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          schema:
+            $ref: '#/definitions/UpdateEntry'
+      responses:
+        '200':
+          description: Information about specified exerciseResult
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - RehabilitationSets
+        - ExerciseResults
+      description: Deletes an exerciseResult identified by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: exerciseResultID
+          in: path
+          description: ID of the exerciseResult
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified exerciseResult
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    exerciseResultID:
+                      type: string
+                      description: ID of exerciseResult
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/rehabilitationSets/{rehabilitationSetID}/exerciseResults/{exerciseResultID}/data':
+    post:
+      tags:
+        - RehabilitationSets
+        - ExerciseResults
+        - Data
+      description: Creates an data entry
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: exerciseResultID
+          in: path
+          description: ID of the exerciseResult
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewDataEntry'
+      responses:
+        '201':
+          description: Information about created Data entry
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    dataID:
+                      type: string
+                      description: ID of Data entry
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/rehabilitationSets/{rehabilitationSetID}/exerciseResults/{exerciseResultID}/data/{dataID}':
+    get:
+      tags:
+        - RehabilitationSets
+        - ExerciseResults
+        - Data
+      description: Returns the Data entry by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: exerciseResultID
+          in: path
+          description: ID of the exerciseResult
+          required: true
+          type: string
+        - name: dataID
+          in: path
+          description: ID of the Data entry
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified Data entry
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Data:
+                      $ref: '#/definitions/Response_DataEntry'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - RehabilitationSets
+        - ExerciseResults
+        - Data
+      description: Updates a Data entry identified by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: exerciseResultID
+          in: path
+          description: ID of the exerciseResult
+          required: true
+          type: string
+        - name: dataID
+          in: path
+          description: ID of the Data entry
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          schema:
+            $ref: '#/definitions/UpdateEntry'
+      responses:
+        '200':
+          description: Information about specified Data entry
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - RehabilitationSets
+        - ExerciseResults
+        - Data
+      description: Deletes an Data entry identified by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: exerciseResultID
+          in: path
+          description: ID of the exerciseResult
+          required: true
+          type: string
+        - name: dataID
+          in: path
+          description: ID of the Data entry
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified Data entry
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    dataID:
+                      type: string
+                      description: ID of Data entry
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/rehabilitationSets/{rehabilitationSetID}/exerciseResults/{exerciseResultID}/appendDataID':
+    post:
+      tags:
+        - RehabilitationSets
+        - ExerciseResults
+        - Data
+      description: Appends dataset to the exerciseResult
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: exerciseResultID
+          in: path
+          description: ID of the exerciseResult
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/AppendDataEntryToExerciseResult'
+      responses:
+        '200':
+          description: Information about Data entry
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    dataID:
+                      type: string
+                      description: ID of Data entry
+                    exerciseResultID:
+                      type: string
+                      description: ID of Exercise Result
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/rehabilitationSets/{rehabilitationSetID}/exerciseResults/{exerciseResultID}/removeDataID/{dataID}':
+    delete:
+      tags:
+        - RehabilitationSets
+        - ExerciseResults
+        - Data
+      description: Removes dataset from exerciseResult
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: exerciseResultID
+          in: path
+          description: ID of the exerciseResult
+          required: true
+          type: string
+        - name: dataID
+          in: path
+          description: ID of the Data entry
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified Data entry
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    DataID:
+                      type: string
+                      description: ID of Rehabilitation Set
+                    exerciseResultID:
+                      type: string
+                      description: ID of Rehabilitation Set
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/rehabilitationSets/{rehabilitationSetID}/manage/exerciseResults':
+    post:
+      tags:
+        - RehabilitationSets
+        - ExerciseResults
+      description: Appends exerciseResult to the rehabilitationSet
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/AppendExerciseResultToRehabilitationSet'
+      responses:
+        '200':
+          description: Information about ExerciseResult
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    rehabilitationSetID:
+                      type: string
+                      description: ID of Rehabilitation Set
+                    exerciseResultID:
+                      type: string
+                      description: ID of Exercise Result
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/rehabilitationSets/{rehabilitationSetID}/manage/exerciseResults/{exerciseResultID}':
+    delete:
+      tags:
+        - RehabilitationSets
+        - ExerciseResults
+      description: Removes exerciseResult from rehabilitationSet
+      security:
+        - apiAuth: []
+      parameters:
+        - name: rehabilitationSetID
+          in: path
+          description: ID of the rehabilitationSet
+          required: true
+          type: string
+        - name: exerciseResultID
+          in: path
+          description: ID of the exerciseResult
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified ExerciseResult
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    rehabilitationSetID:
+                      type: string
+                      description: ID of Rehabilitation Set
+                    exerciseResultID:
+                      type: string
+                      description: ID of Rehabilitation Set
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  /data/exercises:
+    get:
+      tags:
+        - Exercises
+      description: Returns list of exercises
+      security:
+        - apiAuth: []
+      responses:
+        '200':
+          description: List of exercises
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Exercises:
+                      $ref: '#/definitions/Response_Exercises'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - Exercises
+      description: Creates an exercise
+      security:
+        - apiAuth: []
+      parameters:
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewExercises'
+      responses:
+        '201':
+          description: Information about specified exercise
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    exerciseID:
+                      type: string
+                      description: ID of exercise
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/exercises/{exerciseID}':
+    get:
+      tags:
+        - Exercises
+      description: Returns exercise by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: exerciseID
+          in: path
+          description: ID of the exercise
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified exercise
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Exercises:
+                      $ref: '#/definitions/Response_Exercises'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - Exercises
+      description: Updates an exercise
+      security:
+        - apiAuth: []
+      parameters:
+        - name: exerciseID
+          in: path
+          description: ID of the exercise
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          schema:
+            $ref: '#/definitions/UpdateEntry'
+      responses:
+        '200':
+          description: Information about specified exercise
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - Exercises
+      description: Deletes an exercise
+      security:
+        - apiAuth: []
+      parameters:
+        - name: exerciseID
+          in: path
+          description: ID of the exercise
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified exercise
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    exerciseID:
+                      type: string
+                      description: ID of exercise
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  /data/devices:
+    get:
+      tags:
+        - Devices
+      description: Returns list of devices
+      security:
+        - apiAuth: []
+      parameters:
+      responses:
+        '200':
+          description: List of devices
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Devices:
+                      $ref: '#/definitions/Response_Devices'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+        - Devices
+      description: Creates an device
+      security:
+        - apiAuth: []
+      parameters:
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/NewDevices'
+      responses:
+        '201':
+          description: Information about specified device
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    deviceID:
+                      type: string
+                      description: ID of device
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/data/devices/{deviceID}':
+    get:
+      tags:
+        - Devices
+      description: Returns device by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: deviceID
+          in: path
+          description: ID of the device
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified device
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Devices:
+                      $ref: '#/definitions/Response_Devices'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      tags:
+        - Devices
+      description: Updates an device
+      security:
+        - apiAuth: []
+      parameters:
+        - name: deviceID
+          in: path
+          description: ID of the device
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          schema:
+            $ref: '#/definitions/UpdateEntry'
+      responses:
+        '200':
+          description: Information about specified device
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      tags:
+        - Devices
+      description: Deletes an device
+      security:
+        - apiAuth: []
+      parameters:
+        - name: deviceID
+          in: path
+          description: ID of the device
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified device
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    deviceID:
+                      type: string
+                      description: ID of device
+                    msg:
+                      type: string
+                      description: Status message of database query
+                    status_code:
+                      type: integer
+                      description: HTTP status code of database query
+                      minimum: 100
+                      maximum: 600
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  /analysis/analysisTasks:
+    get:
+      tags:
+        - Analysis
+      description: Returns list of analysis tasks
+      security:
+        - apiAuth: []
+      responses:
+        '200':
+          description: List of analysis tasks
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Analyses:
+                      $ref: '#/definitions/Response_AnalysisTasks'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/analysis/analysisTasks/{analysisTaskID}':
+    get:
+      tags:
+        - Analysis
+      description: Returns the analysis tasks by ID
+      security:
+        - apiAuth: []
+      parameters:
+        - name: analysisTaskID
+          in: path
+          description: ID of the analysis tasks
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Information about specified analysis tasks
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Devices:
+                      $ref: '#/definitions/Response_AnalysisTasks'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  /analysis/analysisModules:
+    get:
+      tags:
+        - Analysis
+      description: Returns list of analysis modules
+      security:
+        - apiAuth: []
+      responses:
+        '200':
+          description: List of analysis modules
+          schema:
+            type: object
+            properties:
+              content:
+                type: object
+                properties:
+                  analysisModules:
+                    type: array
+                    items:
+                      $ref: '#/definitions/Response_AnalysisModules'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+  '/analysis/analysisModules/{analysisModuleName}/start':
+    post:
+      tags:
+        - Analysis
+      description: Starts analysis module
+      security:
+        - apiAuth: []
+      parameters:
+        - name: analysisModuleName
+          in: path
+          description: Name of the module that should perform the analysis
+          required: true
+          type: string
+        - name: payload
+          in: body
+          description: Request payload
+          required: true
+          schema:
+            $ref: '#/definitions/StartAnalysisModule'
+      responses:
+        '200':
+          description: Information about started analysis module
+          schema:
+            type: object
+            properties:
+              content:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    status:
+                      type: string
+                      description: Information about analysis module's initialization
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  Response_Organizations:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the organization
+        organizationID:
+          type: string
+          description: Organization ID
+        userGroupIDs:
+          type: string
+          description: CSV list of user group IDs that belong to organization
+        userIDs:
+          type: string
+          description: CSV list of user IDs that belong to organization
+  NewOrganization:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        description: Name of the organization
+  NewUserToOrganization:
+    type: object
+    required:
+      - userIDs
+    properties:
+      userIDs:
+        type: string
+        description: userID
+  Response_UserGroups:
+    type: array
+    items:
+      type: object
+      properties:
+        userGroupID:
+          type: string
+          description: User group ID
+        name:
+          type: string
+          description: Name of the UserGroup
+        permissionLevel:
+          type: string
+          description: Permission level of the organization
+        organizationID:
+          type: string
+          description: Organization ID
+        userIDs:
+          type: string
+          description: CSV list of user IDs that belong to UserGroup
+  NewUserGroup:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        description: Name of the UserGroup
+      permissionLevel:
+        type: string
+        description: Permission level of the organization
+      userIDs:
+        type: string
+        description: UserID to add to the user group
+      organizationID:
+        type: string
+        description: OrganizationID to which UserGroup should be attached
+  NewUserToUserGroup:
+    type: object
+    required:
+      - userIDs
+    properties:
+      userIDs:
+        type: string
+        description: userID
+  Response_Users:
+    type: array
+    items:
+      type: object
+      properties:
+        userID:
+          type: string
+          description: User ID
+        name:
+          type: string
+          description: Name of the User
+        permissionLevel:
+          type: string
+          description: Permission level of the organization
+        organizationID:
+          type: string
+          description: Organization ID
+        userIDs:
+          type: string
+          description: CSV list of user IDs that belong to User
+  NewUser:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        description: Name of the User
+      permissionLevel:
+        type: string
+        description: Permission level of the organization
+      userIDs:
+        type: string
+        description: UserID to add to the user group
+      organizationID:
+        type: string
+        description: OrganizationID to which User should be attached
+  NewPatientToUser:
+    type: object
+    required:
+      - PatientIDs
+    properties:
+      PatientIDs:
+        type: string
+        description: PatientID
+  UpdateEntry:
+    type: object
+    required:
+      - field
+      - value
+    properties:
+      field:
+        type: string
+        description: Database field name to update
+      value:
+        type: string
+        description: New value for filed to update
+  Response_Patients:
+    type: array
+    items:
+      type: object
+      properties:
+        patientID:
+          type: string
+          description: Patient ID
+        extID:
+          type: string
+          description: External ID to hide actual Patient ID
+        allowedOrganizations:
+          type: string
+          description: List of organizations that have access to patients information
+        rehabilitationSets:
+          type: string
+          description: "List of patient's RehabilitaionSets"
+  NewPatient:
+    type: object
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        description: Name of the Patient
+  NewOrganizationToPatient:
+    type: object
+    required:
+      - organizationID
+    properties:
+      organizationID:
+        type: string
+        description: organizationID to add to Patient
+  NewRehabilitationSetToPatient:
+    type: object
+    required:
+      - rehabilitationSetID
+    properties:
+      rehabilitationSetID:
+        type: string
+        description: rehabilitationSetID to add to Patient
+  Response_RehabilitationSets:
+    type: array
+    items:
+      type: object
+      properties:
+        rehabilitationSetID:
+          type: string
+          description: rehabilitationSet ID
+        patientInformationID:
+          type: string
+          description: Patient Information ID
+        patientConditionIDs:
+          type: string
+          description: List containing PatientCondition IDs
+        exerciseResultIDs:
+          type: string
+          description: List of ExerciseResult IDs
+        allowedOrganizations:
+          type: string
+          description: List of Organization IDs to determine organizations that are allowed to access to specified data entry
+  NewRehabilitationSet:
+    type: object
+    required:
+      - patientID
+      - patientInformationID
+    properties:
+      patientID:
+        type: string
+        description: patient ID to attach with
+      patientInformationID:
+        type: string
+        description: patientInformationID to attach with
+      patientConditionIDs:
+        type: string
+        description: PatientCondition ID to attach with
+      exerciseResultIDs:
+        type: string
+        description: ExerciseResult ID to attach with
+  NewPatientCondition:
+    type: object
+    required:
+      - label
+    properties:
+      label:
+        type: string
+        description: Short title/description of condition
+      description:
+        type: string
+        description: Longer description of condition
+      officialMedicalCode:
+        type: string
+        description: ICD-10 classification code
+  NewPatientInformation:
+    type: object
+    required:
+      - bodyWeight
+      - bodyHeight
+      - upperBodyDominantSide
+      - lowerBodyDominantSide
+      - gender
+      - birthYear
+    properties:
+      bodyWeight:
+        type: string
+        description: Weight of patient at time when rehabilitation was started
+      bodyHeight:
+        type: string
+        description: Height of patient at time when rehabilitation was started
+      upperBodyDominantSide:
+        type: string
+        description: 'Dominant side of upper body | ENUM[Right, Left]'
+      lowerBodyDominantSide:
+        type: string
+        description: 'Dominant side of lower body | ENUM[Right, Left]'
+      gender:
+        type: string
+        description: 'Gender of the patient | ENUM[Male, Female, None], defaults to None'
+      birthYear:
+        type: string
+        description: Birth year of the patient
+  Response_patientConditions:
+    type: array
+    items:
+      type: object
+      properties:
+        patientConditionID:
+          type: string
+          description: PatientCondition ID
+        label:
+          type: string
+          description: Short title/description of condition
+        description:
+          type: string
+          description: Longer description of condition
+        officialMedicalCode:
+          type: string
+          description: List of ExerciseResult IDs
+  Response_patientInformation:
+    type: array
+    items:
+      type: object
+      properties:
+        patientInformationID:
+          type: string
+          description: patientInformation ID
+        bodyWeight:
+          type: string
+          description: Weight of patient at time when rehabilitation was started
+        bodyHeight:
+          type: string
+          description: Height of patient at time when rehabilitation was started
+        upperBodyDominantSide:
+          type: string
+          description: 'Dominant side of upper body | ENUM[Right, Left]'
+        lowerBodyDominantSide:
+          type: string
+          description: 'Dominant side of lower body | ENUM[Right, Left]'
+        gender:
+          type: string
+          description: 'Gender of the patient | ENUM[Male, Female, None], defaults to None'
+        birthYear:
+          type: string
+          description: Birth year of the patient
+  NewExerciseResultToRehabilitationSet:
+    type: object
+    required:
+      - exerciseID
+      - deviceID
+      - dataSamples
+      - started
+      - ended
+      - settings
+      - values
+    properties:
+      exerciseID:
+        type: string
+        description: Exercise ID to bind to ExerciseResult
+      deviceID:
+        type: string
+        description: Device ID to bind to ExerciseResult
+      dataSamples:
+        type: string
+        description: Data samples of the exercise (as JSON)
+      started:
+        type: string
+        description: Start time of exercise as Unix time (Epoch time)
+      ended:
+        type: string
+        description: End time of exercise as Unix time (Epoch time)
+      settings:
+        type: string
+        description: Settings that were used during exercise (as JSON)
+      values:
+        type: string
+        description: 'Pre-calculated values like average, minimum and maximum values. Content can be device/sensor specific (as JSON)'
+      progress:
+        type: string
+        description: Progress of the exercise
+  Response_exerciseResult:
+    type: array
+    items:
+      type: object
+      properties:
+        exerciseResultID:
+          type: string
+          description: ExerciseResult ID
+        exerciseID:
+          type: string
+          description: Exercise ID
+        dataIDs:
+          type: string
+          description: DataIDs related to ExerciseResult
+        dataSamples:
+          type: string
+          description: Data samples of the exercise (as JSON)
+        started:
+          type: string
+          description: Start time of exercise as Unix time (Epoch time)
+        ended:
+          type: string
+          description: End time of exercise as Unix time (Epoch time)
+        settings:
+          type: string
+          description: Settings that were used during exercise (as JSON)
+        values:
+          type: string
+          description: 'Pre-calculated values like average, minimum and maximum values. Content can be device/sensor specific (as JSON)'
+  NewDataEntry:
+    type: object
+    required:
+      - deviceID
+      - samples
+    properties:
+      deviceID:
+        type: string
+        description: Device ID to bind to DataEntry
+      samples:
+        type: string
+        description: Samples of data entry (as JSON)
+  Response_DataEntry:
+    type: array
+    items:
+      type: object
+      properties:
+        dataID:
+          type: string
+          description: Data ID
+        deviceID:
+          type: string
+          description: Device ID
+        samples:
+          type: array
+          description: Samples of data entry
+  AppendDataEntryToExerciseResult:
+    type: object
+    required:
+      - dataID
+    properties:
+      dataID:
+        type: string
+        description: Data ID to append to the ExerciseResult
+  AppendExerciseResultToRehabilitationSet:
+    type: object
+    required:
+      - exerciseResultID
+    properties:
+      exerciseResultID:
+        type: string
+        description: ExerciseResultID to append to the RehabilitationSet
+  Response_Exercises:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the exercise
+        exerciseID:
+          type: string
+          description: Exercise ID
+        description:
+          type: string
+          description: Description of the exercise
+        settings:
+          type: string
+          description: Settings of the exercise (as JSON)
+  NewExercises:
+    type: object
+    required:
+      - name
+      - description
+    properties:
+      name:
+        type: string
+        description: Name of the organization
+      description:
+        type: string
+        description: Description of the exercise
+      settings:
+        type: string
+        description: Settings of the exercise (as JSON)
+  Response_Devices:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the device
+        deviceID:
+          type: string
+          description: Device ID
+        type:
+          type: string
+          description: Type of the device
+        description:
+          type: string
+          description: Description of the device
+        axisCount:
+          type: integer
+          description: Number of axes that produce data
+        valueUnit:
+          type: string
+          description: Unit of produced data
+        valueUnitAbbreviation:
+          type: string
+          description: Abbreviation of the unit
+        defaultValue:
+          type: string
+          description: Default value of data
+        maximumValue:
+          type: string
+          description: Maximum value of data
+        minimumValue:
+          type: string
+          description: Minimum value of data
+  NewDevices:
+    type: object
+    required:
+      - name
+      - type
+      - description
+      - axisCount
+      - valueUnit
+      - valueUnitAbbreviation
+      - defaultValue
+      - maximumValue
+      - minimumValue
+    properties:
+      name:
+        type: string
+        description: Name of the device
+      deviceID:
+        type: string
+        description: Device ID
+      type:
+        type: string
+        description: Type of the device
+      description:
+        type: string
+        description: Description of the device
+      axisCount:
+        type: integer
+        description: Number of axes that produce data
+      valueUnit:
+        type: string
+        description: Unit of produced data
+      valueUnitAbbreviation:
+        type: string
+        description: Abbreviation of the unit
+      defaultValue:
+        type: string
+        description: Default value of data
+      maximumValue:
+        type: string
+        description: Maximum value of data
+      minimumValue:
+        type: string
+        description: Minimum value of data
+  Response_AnalysisTasks:
+    type: array
+    items:
+      type: object
+      properties:
+        analysistaskID:
+          type: string
+          description: analysistask ID
+        analysisModule:
+          type: string
+          description: Name of the analysis module
+        analysisResult:
+          type: string
+          description: Analysis results
+        configurationParameters:
+          type: string
+          description: configurationParameters
+        started:
+          type: string
+          description: Start time of exercise as Unix time (Epoch time)
+        ended:
+          type: string
+          description: End time of exercise as Unix time (Epoch time)
+        notification:
+          type: string
+          description: Notification method
+        status:
+          type: string
+          description: Status of the analysis
+        taskName:
+          type: string
+          description: Name of the analsysis task
+        userName:
+          type: string
+          description: User that has launched analysis task
+        allowedOrganizations:
+          type: string
+          description: List of organizations that have access to analysis task
+  Response_AnalysisModules:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the analysis module
+        permission_level:
+          type: string
+          description: Permission level that is required to perform analysis with this module
+        description:
+          type: string
+          description: Description of the analysis module
+        configParams:
+          type: string
+          description: Configuration parameters that can be used on module initialization
+  StartAnalysisModule:
+    type: object
+    required:
+      - Settings
+    properties:
+      Settings:
+        type: string
+        description: Settings for the analysis (as JSON)
+  Error:
+    type: object
+    properties:
+      requestStatusCode:
+        type: integer
+        description: HTTP status code
+        minimum: 100
+        maximum: 600
+      requestStatus:
+        type: string
+        description: HTTP status message
+      content:
+        type: string
+        description: Detailed error description

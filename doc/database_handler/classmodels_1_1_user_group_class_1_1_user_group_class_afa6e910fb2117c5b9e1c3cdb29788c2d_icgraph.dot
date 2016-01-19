@@ -1,0 +1,11 @@
+digraph "models.UserGroupClass.UserGroupClass.columns"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="models.UserGroupClass.User\lGroupClass.columns",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="models.UserGroupClass.User\lGroupClass.columnitems",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_user_group_class_1_1_user_group_class.html#abb5de1a75b145d56f659a765beb067eb"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="models.UserGroupClass.User\lGroupClass.tojson",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_user_group_class_1_1_user_group_class.html#a54e8114e4bfed68dcc73620abe22cc01"];
+}

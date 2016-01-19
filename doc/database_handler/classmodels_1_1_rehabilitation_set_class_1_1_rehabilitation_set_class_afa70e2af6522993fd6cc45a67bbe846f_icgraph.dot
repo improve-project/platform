@@ -1,0 +1,13 @@
+digraph "models.RehabilitationSetClass.RehabilitationSetClass.columnitems"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="models.RehabilitationSet\lClass.RehabilitationSetClass.columnitems",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="models.RehabilitationSet\lClass.RehabilitationSetClass.tojson",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_rehabilitation_set_class_1_1_rehabilitation_set_class.html#afb548fd65a8a2ac70a0832e0f996daa7"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="models.UserClass.UserClass.tojson",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_user_class_1_1_user_class.html#ae9a99d519193af8cf076aa44b8e98573"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="models.UserGroupClass.User\lGroupClass.tojson",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_user_group_class_1_1_user_group_class.html#a54e8114e4bfed68dcc73620abe22cc01"];
+}

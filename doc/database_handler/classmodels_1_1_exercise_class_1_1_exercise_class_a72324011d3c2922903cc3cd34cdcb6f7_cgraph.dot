@@ -1,0 +1,29 @@
+digraph "models.ExerciseClass.ExerciseClass.tojson"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="models.ExerciseClass.Exercise\lClass.tojson",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="models.AnalysisClass.Analysis\lClass.columnitems",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_analysis_class_1_1_analysis_class.html#a0c9ae6c001b47c6099164c0a49af6e16"];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="models.AnalysisClass.Analysis\lClass.columns",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_analysis_class_1_1_analysis_class.html#a86d727b7a33ad8a4940a16bef899276f"];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="models.DataClass.DataClass.columnitems",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_data_class_1_1_data_class.html#a20b9285e6e49baefe4a1ae6ce570a078"];
+  Node4 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="models.DataClass.DataClass.columns",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_data_class_1_1_data_class.html#a09a87c0528b2ddc4fe835c0500f40e2b"];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="models.DeviceClass.Device\lClass.columnitems",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_device_class_1_1_device_class.html#ae6e4749004918e00af772c9f3538adce"];
+  Node6 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="models.DeviceClass.Device\lClass.columns",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_device_class_1_1_device_class.html#a215015f98ddf18faa78cd57eb6b45cfc"];
+  Node1 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="models.ExerciseClass.Exercise\lClass.columnitems",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_exercise_class_1_1_exercise_class.html#ac1c4fbbd0535dc5ef17ec5dcae2c8544"];
+  Node8 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="models.ExerciseClass.Exercise\lClass.columns",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmodels_1_1_exercise_class_1_1_exercise_class.html#ae058259ad06b8df68c90df69ce96c133"];
+}
