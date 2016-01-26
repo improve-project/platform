@@ -25,8 +25,6 @@ SUCCESS_STATUS_CODES = ['200', '201', '202', '203', '204', '205', '206']
 Username to use for testing purposes
 """
 DEMO_USER = 'NotInUse'
-#DEMO_USER = 'Evalan_u_1'
-#DEMO_USER = 'Jani_test_user_username'
 
 # Username for production use
 production_user = ''
