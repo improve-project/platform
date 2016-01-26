@@ -31,6 +31,7 @@ The Improve platform has been developed within the Generic Platform for Movement
 - [ Developer one-liners ](/doc/developer_oneliners.md)
 - [ API documentation ](/doc/api/)
 - [ Database-handler documentation ](/doc/database_handler/)
+- [ Analysis framework documentation ](/doc/analysis/)
 
 # Repository structure
     .
